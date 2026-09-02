@@ -1,0 +1,24 @@
+# Delphi
+*.dcu
+*.exe
+*.dll
+*.bpl
+*.dcp
+*.map
+*.drc
+*.rsm
+*.tds
+*.identcache
+*.local
+*.stat
+*.~*
+__history/
+__recovery/
+Win32/
+Win64/
+Zonico/bin/Win32/
+Zonico/bin/Win64/
+
+# Firebird
+*.fdb
+*.gdb
