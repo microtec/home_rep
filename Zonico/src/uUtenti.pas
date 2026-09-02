@@ -68,7 +68,7 @@ begin
   GridPerm.DataSource := DSPerm;
   GridPerm.PageMode := False;
   GridPerm.AutoCreateColumns := False;
-  GridPerm.Look := glOffice2019White;
+  GridPerm.Look := glWin8;
   GridPerm.Options := GridPerm.Options + [goEditing];
   with GridPerm.Columns.Add do begin FieldName := 'DESCRIZIONE'; Header := 'Modulo'; Width := 260; ReadOnly := True; end;
   with GridPerm.Columns.Add do begin FieldName := 'LETTURA';   Header := 'Lettura';   Width := 90; Editor := edCheckBox; CheckTrue := '1'; CheckFalse := '0'; end;

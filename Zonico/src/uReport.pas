@@ -53,7 +53,7 @@ type
 implementation
 
 uses
-  uDM;
+  uDM, uStile;
 
 {$R *.dfm}
 
@@ -61,6 +61,7 @@ procedure TfrmReport.FormCreate(Sender: TObject);
 var
   G: TDBAdvGrid;
 begin
+  ApplicaStileMetro(Self);
   QGiorno.Connection := DM.Conn;
   QOperatore.Connection := DM.Conn;
   QPagamento.Connection := DM.Conn;
@@ -69,7 +70,7 @@ begin
   begin
     G.PageMode := False;
     G.AutoCreateColumns := True;
-    G.Look := glOffice2019White;
+    G.Look := glWin8;
     G.FloatFormat := '%.2f';
     G.Options := G.Options - [goEditing];
   end;

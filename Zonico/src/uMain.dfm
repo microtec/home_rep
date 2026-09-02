@@ -162,7 +162,7 @@ object frmMain: TfrmMain
     Version = '1.7.0.0'
   end
   object Styler: TAdvToolBarOfficeStyler
-    Style = bsOffice2019White
+    Style = bsWindows8
     Left = 1000
     Top = 100
   end

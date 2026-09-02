@@ -70,7 +70,7 @@ type
 implementation
 
 uses
-  uDM, uSessione;
+  uDM, uSessione, uStile;
 
 {$R *.dfm}
 
@@ -91,6 +91,7 @@ end;
 
 procedure TfrmVenditaDett.FormCreate(Sender: TObject);
 begin
+  ApplicaStileMetro(Self);
   QClienti.Connection := DM.Conn;
   QOperatori.Connection := DM.Conn;
   QPagamenti.Connection := DM.Conn;
@@ -109,7 +110,7 @@ begin
 
   GridRighe.PageMode := False;
   GridRighe.AutoCreateColumns := False;
-  GridRighe.Look := glOffice2019White;
+  GridRighe.Look := glWin8;
   GridRighe.Options := GridRighe.Options + [goEditing];
   with GridRighe.Columns.Add do begin FieldName := 'TIPO';        Header := 'T';           Width := 30;  ReadOnly := True; end;
   with GridRighe.Columns.Add do begin FieldName := 'DESCRIZIONE'; Header := 'Descrizione'; Width := 330; end;

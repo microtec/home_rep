@@ -241,7 +241,7 @@ object frmVenditaDett: TfrmVenditaDett
     FixedFont.Height = -12
     FixedFont.Name = 'Segoe UI'
     FixedFont.Style = [fsBold]
-    Look = glOffice2019White
+    Look = glWin8
     PrintSettings.Font.Charset = DEFAULT_CHARSET
     PrintSettings.Font.Color = clWindowText
     PrintSettings.Font.Height = -11

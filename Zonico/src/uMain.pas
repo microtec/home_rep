@@ -47,12 +47,13 @@ implementation
 
 uses
   uSessione, uLogin, uClienti, uOperatori, uServizi, uProdotti, uAgenda,
-  uVendite, uReport, uUtenti;
+  uVendite, uReport, uUtenti, uStile;
 
 {$R *.dfm}
 
 procedure TfrmMain.FormCreate(Sender: TObject);
 begin
+  ApplicaStileMetro(Self);
   ApplicaPermessi;
 end;
 

@@ -55,7 +55,7 @@ type
 implementation
 
 uses
-  uDM, uSessione;
+  uDM, uSessione, uStile;
 
 {$R *.dfm}
 
@@ -94,6 +94,7 @@ procedure TfrmAppuntamentoDett.FormCreate(Sender: TObject);
 var
   S: string;
 begin
+  ApplicaStileMetro(Self);
   QClienti.Connection := DM.Conn;
   QOperatori.Connection := DM.Conn;
   QServizi.Connection := DM.Conn;

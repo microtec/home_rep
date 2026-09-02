@@ -4,6 +4,7 @@ uses
   Vcl.Forms,
   uDM in 'src\uDM.pas' {DM: TDataModule},
   uSessione in 'src\uSessione.pas',
+  uStile in 'src\uStile.pas',
   uLogin in 'src\uLogin.pas' {frmLogin},
   uMain in 'src\uMain.pas' {frmMain},
   uBaseAnag in 'src\uBaseAnag.pas' {frmBaseAnag},

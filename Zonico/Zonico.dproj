@@ -66,6 +66,7 @@
       <DesignClass>TDataModule</DesignClass>
     </DCCReference>
     <DCCReference Include="src\uSessione.pas"/>
+    <DCCReference Include="src\uStile.pas"/>
     <DCCReference Include="src\uLogin.pas">
       <Form>frmLogin</Form>
       <FormType>dfm</FormType>

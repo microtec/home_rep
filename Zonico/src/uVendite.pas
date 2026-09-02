@@ -39,19 +39,20 @@ type
 implementation
 
 uses
-  uDM, uSessione, uVenditaDett;
+  uDM, uSessione, uVenditaDett, uStile;
 
 {$R *.dfm}
 
 procedure TfrmVendite.FormCreate(Sender: TObject);
 begin
+  ApplicaStileMetro(Self);
   Q.Connection := DM.Conn;
   dtGiorno.Date := Date;
   btnNuova.Enabled := Sessione.PuoScrivere('VENDITE');
   btnElimina.Enabled := Sessione.PuoCancellare('VENDITE');
   Grid.PageMode := False;
   Grid.AutoCreateColumns := False;
-  Grid.Look := glOffice2019White;
+  Grid.Look := glWin8;
   with Grid.Columns.Add do begin FieldName := 'ID';        Header := 'N.';        Width := 60; end;
   with Grid.Columns.Add do begin FieldName := 'DATA';      Header := 'Ora';       Width := 70; end;
   with Grid.Columns.Add do begin FieldName := 'CLIENTE';   Header := 'Cliente';   Width := 220; end;

@@ -183,7 +183,7 @@ object frmBaseAnag: TfrmBaseAnag
     FixedFont.Name = 'Segoe UI'
     FixedFont.Style = [fsBold]
     FloatFormat = '%.2f'
-    Look = glOffice2019White
+    Look = glWin8
     PrintSettings.DateFormat = 'dd/mm/yyyy'
     PrintSettings.Font.Charset = DEFAULT_CHARSET
     PrintSettings.Font.Color = clWindowText

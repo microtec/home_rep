@@ -27,7 +27,7 @@ type
 implementation
 
 uses
-  uSessione;
+  uSessione, uStile;
 
 {$R *.dfm}
 
@@ -36,6 +36,7 @@ var
   F: TfrmLogin;
 begin
   F := TfrmLogin.Create(nil);
+  ApplicaStileMetro(F);
   try
     Result := F.ShowModal = mrOk;
   finally

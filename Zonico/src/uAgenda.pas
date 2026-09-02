@@ -50,7 +50,7 @@ type
 implementation
 
 uses
-  uDM, uSessione, uAppuntamentoDett;
+  uDM, uSessione, uAppuntamentoDett, uStile;
 
 {$R *.dfm}
 
@@ -61,6 +61,7 @@ const
 
 procedure TfrmAgenda.FormCreate(Sender: TObject);
 begin
+  ApplicaStileMetro(Self);
   Planner.Mode.PlannerType := plDay;
   Planner.Display.DisplayUnit := MINUTI_SLOT;
   Planner.Display.DisplayStart := ORA_APERTURA * 60 div MINUTI_SLOT;

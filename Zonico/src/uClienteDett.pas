@@ -52,6 +52,9 @@ type
 
 implementation
 
+uses
+  uStile;
+
 {$R *.dfm}
 
 class function TfrmClienteDett.Esegui(ADataSource: TDataSource): Boolean;
@@ -59,6 +62,7 @@ var
   F: TfrmClienteDett;
 begin
   F := TfrmClienteDett.Create(nil);
+  ApplicaStileMetro(F);
   try
     F.DS.DataSet := ADataSource.DataSet;
     Result := F.ShowModal = mrOk;

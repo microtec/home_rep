@@ -62,6 +62,7 @@ lettura/scrittura/cancellazione per ogni modulo (`PERMESSI`) dalla form Utenti.
 
 ## Note
 
+- Stile grafico: Metro (`tsWindows8`) applicato da `uStile.ApplicaStileMetro` a ogni form.
 - Il progetto non è ancora stato compilato: verificare i nomi di proprietà/eventi TMS
   con la versione installata (in particolare `TPlanner` in `uAgenda`).
 - Lo scarico magazzino dei prodotti avviene una sola volta alla prima chiusura della vendita (`VENDITE.CHIUSA`).

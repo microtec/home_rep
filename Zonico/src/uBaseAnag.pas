@@ -58,12 +58,13 @@ type
 implementation
 
 uses
-  uDM, uSessione;
+  uDM, uSessione, uStile;
 
 {$R *.dfm}
 
 procedure TfrmBaseAnag.FormCreate(Sender: TObject);
 begin
+  ApplicaStileMetro(Self);
   Q.Connection := DM.Conn;
   Q.UpdateOptions.UpdateTableName := FTabella;
   Q.UpdateOptions.KeyFields := 'ID';
@@ -111,7 +112,7 @@ begin
   Grid.PageMode := False;
   Grid.AutoCreateColumns := True;
   Grid.ShowUnicode := True;
-  Grid.Look := glOffice2019White;
+  Grid.Look := glWin8;
   Grid.FixedRowHeight := 26;
   Grid.DefaultRowHeight := 24;
 end;
