@@ -1,0 +1,476 @@
+object frmClienteDett: TfrmClienteDett
+  Left = 0
+  Top = 0
+  BorderStyle = bsDialog
+  Caption = 'Scheda cliente'
+  ClientHeight = 420
+  ClientWidth = 560
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -12
+  Font.Name = 'Segoe UI'
+  Font.Style = []
+  Position = poMainFormCenter
+  PixelsPerInch = 96
+  TextHeight = 15
+  object Pager: TAdvOfficePager
+    Left = 0
+    Top = 0
+    Width = 560
+    Height = 372
+    Align = alClient
+    ActivePage = pgDati
+    AdvOfficePagerStyler = nil
+    TabOrder = 0
+    Version = '3.4.0.0'
+    object pgDati: TAdvOfficePage
+      Left = 1
+      Top = 26
+      Width = 558
+      Height = 345
+      Caption = 'Dati anagrafici'
+      object lblCognome: TLabel
+        Left = 16
+        Top = 16
+        Width = 50
+        Height = 15
+        Caption = 'Cognome'
+      end
+      object lblNome: TLabel
+        Left = 288
+        Top = 16
+        Width = 31
+        Height = 15
+        Caption = 'Nome'
+      end
+      object lblSesso: TLabel
+        Left = 16
+        Top = 64
+        Width = 31
+        Height = 15
+        Caption = 'Sesso'
+      end
+      object lblNascita: TLabel
+        Left = 120
+        Top = 64
+        Width = 78
+        Height = 15
+        Caption = 'Data di nascita'
+      end
+      object lblCF: TLabel
+        Left = 288
+        Top = 64
+        Width = 70
+        Height = 15
+        Caption = 'Codice fiscale'
+      end
+      object lblCell: TLabel
+        Left = 16
+        Top = 112
+        Width = 47
+        Height = 15
+        Caption = 'Cellulare'
+      end
+      object lblTel: TLabel
+        Left = 200
+        Top = 112
+        Width = 46
+        Height = 15
+        Caption = 'Telefono'
+      end
+      object lblEmail: TLabel
+        Left = 384
+        Top = 112
+        Width = 30
+        Height = 15
+        Caption = 'Email'
+      end
+      object lblIndirizzo: TLabel
+        Left = 16
+        Top = 160
+        Width = 46
+        Height = 15
+        Caption = 'Indirizzo'
+      end
+      object lblCap: TLabel
+        Left = 16
+        Top = 208
+        Width = 22
+        Height = 15
+        Caption = 'CAP'
+      end
+      object lblCitta: TLabel
+        Left = 120
+        Top = 208
+        Width = 26
+        Height = 15
+        Caption = 'Citt'#224
+      end
+      object lblProv: TLabel
+        Left = 456
+        Top = 208
+        Width = 28
+        Height = 15
+        Caption = 'Prov.'
+      end
+      object edCognome: TDBAdvEdit
+        Left = 16
+        Top = 34
+        Width = 256
+        Height = 23
+        DataField = 'COGNOME'
+        DataSource = DS
+        LabelFont.Charset = DEFAULT_CHARSET
+        LabelFont.Color = clWindowText
+        LabelFont.Height = -11
+        LabelFont.Name = 'Tahoma'
+        LabelFont.Style = []
+        Lookup.Font.Charset = DEFAULT_CHARSET
+        Lookup.Font.Color = clWindowText
+        Lookup.Font.Height = -11
+        Lookup.Font.Name = 'Arial'
+        Lookup.Font.Style = []
+        Color = clWindow
+        TabOrder = 0
+        Visible = True
+        Version = '1.9.1.0'
+      end
+      object edNome: TDBAdvEdit
+        Left = 288
+        Top = 34
+        Width = 254
+        Height = 23
+        DataField = 'NOME'
+        DataSource = DS
+        LabelFont.Charset = DEFAULT_CHARSET
+        LabelFont.Color = clWindowText
+        LabelFont.Height = -11
+        LabelFont.Name = 'Tahoma'
+        LabelFont.Style = []
+        Lookup.Font.Charset = DEFAULT_CHARSET
+        Lookup.Font.Color = clWindowText
+        Lookup.Font.Height = -11
+        Lookup.Font.Name = 'Arial'
+        Lookup.Font.Style = []
+        Color = clWindow
+        TabOrder = 1
+        Visible = True
+        Version = '1.9.1.0'
+      end
+      object cbSesso: TDBAdvComboBox
+        Left = 16
+        Top = 82
+        Width = 88
+        Height = 23
+        DataField = 'SESSO'
+        DataSource = DS
+        Items.Strings = (
+          'F'
+          'M')
+        Version = '1.6.0.0'
+        TabOrder = 2
+      end
+      object dtNascita: TDBAdvDateTimePicker
+        Left = 120
+        Top = 82
+        Width = 152
+        Height = 23
+        DataField = 'DATA_NASCITA'
+        DataSource = DS
+        Date = 0.000000000000000000
+        Format = 'dd/MM/yyyy'
+        Time = 0.000000000000000000
+        DateTime = 0.000000000000000000
+        TabOrder = 3
+        Version = '1.6.4.0'
+        Kind = dkDate
+        ShowCheckBox = True
+        LabelFont.Charset = DEFAULT_CHARSET
+        LabelFont.Color = clWindowText
+        LabelFont.Height = -11
+        LabelFont.Name = 'Tahoma'
+        LabelFont.Style = []
+      end
+      object edCF: TDBAdvEdit
+        Left = 288
+        Top = 82
+        Width = 254
+        Height = 23
+        DataField = 'CODICE_FISCALE'
+        DataSource = DS
+        CharCase = ecUpperCase
+        LabelFont.Charset = DEFAULT_CHARSET
+        LabelFont.Color = clWindowText
+        LabelFont.Height = -11
+        LabelFont.Name = 'Tahoma'
+        LabelFont.Style = []
+        Lookup.Font.Charset = DEFAULT_CHARSET
+        Lookup.Font.Color = clWindowText
+        Lookup.Font.Height = -11
+        Lookup.Font.Name = 'Arial'
+        Lookup.Font.Style = []
+        Color = clWindow
+        MaxLength = 16
+        TabOrder = 4
+        Visible = True
+        Version = '1.9.1.0'
+      end
+      object edCell: TDBAdvEdit
+        Left = 16
+        Top = 130
+        Width = 168
+        Height = 23
+        DataField = 'CELLULARE'
+        DataSource = DS
+        LabelFont.Charset = DEFAULT_CHARSET
+        LabelFont.Color = clWindowText
+        LabelFont.Height = -11
+        LabelFont.Name = 'Tahoma'
+        LabelFont.Style = []
+        Lookup.Font.Charset = DEFAULT_CHARSET
+        Lookup.Font.Color = clWindowText
+        Lookup.Font.Height = -11
+        Lookup.Font.Name = 'Arial'
+        Lookup.Font.Style = []
+        Color = clWindow
+        TabOrder = 5
+        Visible = True
+        Version = '1.9.1.0'
+      end
+      object edTel: TDBAdvEdit
+        Left = 200
+        Top = 130
+        Width = 168
+        Height = 23
+        DataField = 'TELEFONO'
+        DataSource = DS
+        LabelFont.Charset = DEFAULT_CHARSET
+        LabelFont.Color = clWindowText
+        LabelFont.Height = -11
+        LabelFont.Name = 'Tahoma'
+        LabelFont.Style = []
+        Lookup.Font.Charset = DEFAULT_CHARSET
+        Lookup.Font.Color = clWindowText
+        Lookup.Font.Height = -11
+        Lookup.Font.Name = 'Arial'
+        Lookup.Font.Style = []
+        Color = clWindow
+        TabOrder = 6
+        Visible = True
+        Version = '1.9.1.0'
+      end
+      object edEmail: TDBAdvEdit
+        Left = 384
+        Top = 130
+        Width = 158
+        Height = 23
+        DataField = 'EMAIL'
+        DataSource = DS
+        LabelFont.Charset = DEFAULT_CHARSET
+        LabelFont.Color = clWindowText
+        LabelFont.Height = -11
+        LabelFont.Name = 'Tahoma'
+        LabelFont.Style = []
+        Lookup.Font.Charset = DEFAULT_CHARSET
+        Lookup.Font.Color = clWindowText
+        Lookup.Font.Height = -11
+        Lookup.Font.Name = 'Arial'
+        Lookup.Font.Style = []
+        Color = clWindow
+        TabOrder = 7
+        Visible = True
+        Version = '1.9.1.0'
+      end
+      object edIndirizzo: TDBAdvEdit
+        Left = 16
+        Top = 178
+        Width = 526
+        Height = 23
+        DataField = 'INDIRIZZO'
+        DataSource = DS
+        LabelFont.Charset = DEFAULT_CHARSET
+        LabelFont.Color = clWindowText
+        LabelFont.Height = -11
+        LabelFont.Name = 'Tahoma'
+        LabelFont.Style = []
+        Lookup.Font.Charset = DEFAULT_CHARSET
+        Lookup.Font.Color = clWindowText
+        Lookup.Font.Height = -11
+        Lookup.Font.Name = 'Arial'
+        Lookup.Font.Style = []
+        Color = clWindow
+        TabOrder = 8
+        Visible = True
+        Version = '1.9.1.0'
+      end
+      object edCap: TDBAdvEdit
+        Left = 16
+        Top = 226
+        Width = 88
+        Height = 23
+        DataField = 'CAP'
+        DataSource = DS
+        LabelFont.Charset = DEFAULT_CHARSET
+        LabelFont.Color = clWindowText
+        LabelFont.Height = -11
+        LabelFont.Name = 'Tahoma'
+        LabelFont.Style = []
+        Lookup.Font.Charset = DEFAULT_CHARSET
+        Lookup.Font.Color = clWindowText
+        Lookup.Font.Height = -11
+        Lookup.Font.Name = 'Arial'
+        Lookup.Font.Style = []
+        Color = clWindow
+        TabOrder = 9
+        Visible = True
+        Version = '1.9.1.0'
+      end
+      object edCitta: TDBAdvEdit
+        Left = 120
+        Top = 226
+        Width = 320
+        Height = 23
+        DataField = 'CITTA'
+        DataSource = DS
+        LabelFont.Charset = DEFAULT_CHARSET
+        LabelFont.Color = clWindowText
+        LabelFont.Height = -11
+        LabelFont.Name = 'Tahoma'
+        LabelFont.Style = []
+        Lookup.Font.Charset = DEFAULT_CHARSET
+        Lookup.Font.Color = clWindowText
+        Lookup.Font.Height = -11
+        Lookup.Font.Name = 'Arial'
+        Lookup.Font.Style = []
+        Color = clWindow
+        TabOrder = 10
+        Visible = True
+        Version = '1.9.1.0'
+      end
+      object edProv: TDBAdvEdit
+        Left = 456
+        Top = 226
+        Width = 86
+        Height = 23
+        DataField = 'PROVINCIA'
+        DataSource = DS
+        CharCase = ecUpperCase
+        LabelFont.Charset = DEFAULT_CHARSET
+        LabelFont.Color = clWindowText
+        LabelFont.Height = -11
+        LabelFont.Name = 'Tahoma'
+        LabelFont.Style = []
+        Lookup.Font.Charset = DEFAULT_CHARSET
+        Lookup.Font.Color = clWindowText
+        Lookup.Font.Height = -11
+        Lookup.Font.Name = 'Arial'
+        Lookup.Font.Style = []
+        Color = clWindow
+        MaxLength = 2
+        TabOrder = 11
+        Visible = True
+        Version = '1.9.1.0'
+      end
+      object chkAttivo: TDBCheckBox
+        Left = 16
+        Top = 272
+        Width = 120
+        Height = 17
+        Caption = 'Cliente attivo'
+        DataField = 'ATTIVO'
+        DataSource = DS
+        TabOrder = 12
+        ValueChecked = '1'
+        ValueUnchecked = '0'
+      end
+      object chkPrivacy: TDBCheckBox
+        Left = 16
+        Top = 296
+        Width = 200
+        Height = 17
+        Caption = 'Consenso privacy'
+        DataField = 'CONSENSO_PRIVACY'
+        DataSource = DS
+        TabOrder = 13
+        ValueChecked = '1'
+        ValueUnchecked = '0'
+      end
+      object chkMarketing: TDBCheckBox
+        Left = 16
+        Top = 320
+        Width = 240
+        Height = 17
+        Caption = 'Consenso marketing (SMS/email)'
+        DataField = 'CONSENSO_MARKETING'
+        DataSource = DS
+        TabOrder = 14
+        ValueChecked = '1'
+        ValueUnchecked = '0'
+      end
+    end
+    object pgNote: TAdvOfficePage
+      Left = 1
+      Top = 26
+      Width = 558
+      Height = 345
+      Caption = 'Note'
+      TabVisible = True
+      object memNote: TDBMemo
+        Left = 0
+        Top = 0
+        Width = 558
+        Height = 345
+        Align = alClient
+        DataField = 'NOTE'
+        DataSource = DS
+        ScrollBars = ssVertical
+        TabOrder = 0
+      end
+    end
+  end
+  object pnlButtons: TAdvPanel
+    Left = 0
+    Top = 372
+    Width = 560
+    Height = 48
+    Align = alBottom
+    UseDockManager = True
+    Version = '2.8.0.0'
+    Caption.Visible = False
+    object btnOk: TAdvGlowButton
+      Left = 344
+      Top = 8
+      Width = 100
+      Height = 32
+      Caption = 'OK'
+      Default = True
+      NotesFont.Charset = DEFAULT_CHARSET
+      NotesFont.Color = clWindowText
+      NotesFont.Height = -11
+      NotesFont.Name = 'Tahoma'
+      NotesFont.Style = []
+      TabOrder = 0
+      OnClick = btnOkClick
+    end
+    object btnAnnulla: TAdvGlowButton
+      Left = 452
+      Top = 8
+      Width = 100
+      Height = 32
+      Caption = 'Annulla'
+      Cancel = True
+      ModalResult = 2
+      NotesFont.Charset = DEFAULT_CHARSET
+      NotesFont.Color = clWindowText
+      NotesFont.Height = -11
+      NotesFont.Name = 'Tahoma'
+      NotesFont.Style = []
+      TabOrder = 1
+    end
+  end
+  object DS: TDataSource
+    Left = 496
+    Top = 8
+  end
+end
