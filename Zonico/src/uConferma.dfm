@@ -8,37 +8,29 @@ object frmConferma: TfrmConferma
   ClientWidth = 440
   Color = clWhite
   Font.Charset = DEFAULT_CHARSET
-  Font.Color = clWindowText
+  Font.Color = 7893602
   Font.Height = -13
   Font.Name = 'Comfortaa'
   Font.Style = []
   FormStyle = fsNormal
+  KeyPreview = True
   OldCreateOrder = False
   Position = poMainFormCenter
   OnCreate = FormCreate
+  OnKeyPress = FormKeyPress
   PixelsPerInch = 96
   TextHeight = 16
-  object pnlMessaggio: TAdvPanel
+  object pnlMessaggio: TPanel
     Left = 0
     Top = 0
     Width = 440
     Height = 110
     Align = alClient
+    BevelOuter = bvNone
+    Color = clWhite
+    ParentBackground = False
     ParentColor = False
     TabOrder = 0
-    Version = '2.4.0.0'
-    BorderColor = clNone
-    Caption.Text = ''
-    Caption.Visible = False
-    Fill.Color = clWhite
-    Fill.ColorTo = clWhite
-    Fill.BorderColor = clNone
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -13
-    Font.Name = 'Comfortaa'
-    Font.Style = []
-    ParentFont = False
     object lblMessaggio: TLabel
       Left = 24
       Top = 28
@@ -47,7 +39,7 @@ object frmConferma: TfrmConferma
       AutoSize = False
       Caption = 'Messaggio'
       Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWindowText
+      Font.Color = 7893602
       Font.Height = -13
       Font.Name = 'Comfortaa'
       Font.Style = []
@@ -55,65 +47,16 @@ object frmConferma: TfrmConferma
       WordWrap = True
     end
   end
-  object pnlBottoni: TAdvPanel
+  object pnlBottoni: TPanel
     Left = 0
     Top = 110
     Width = 440
     Height = 60
     Align = alBottom
+    BevelOuter = bvNone
+    Color = 15789804
+    ParentBackground = False
     ParentColor = False
     TabOrder = 1
-    Version = '2.4.0.0'
-    BorderColor = clNone
-    Caption.Text = ''
-    Caption.Visible = False
-    Fill.Color = clWhite
-    Fill.ColorTo = clWhite
-    Fill.BorderColor = clSilver
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -13
-    Font.Name = 'Comfortaa'
-    Font.Style = []
-    ParentFont = False
-    object btnSi: TAdvGlowButton
-      Left = 208
-      Top = 14
-      Width = 100
-      Height = 32
-      Caption = 'Si'
-      Default = True
-      ModalResult = 6
-      TabOrder = 0
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWindowText
-      Font.Height = -13
-      Font.Name = 'Comfortaa'
-      Font.Style = []
-      ParentFont = False
-      Version = '1.7.0.0'
-    end
-    object btnNo: TAdvGlowButton
-      Left = 320
-      Top = 14
-      Width = 100
-      Height = 32
-      Cancel = True
-      Caption = 'No'
-      ModalResult = 7
-      TabOrder = 1
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWindowText
-      Font.Height = -13
-      Font.Name = 'Comfortaa'
-      Font.Style = []
-      ParentFont = False
-      Version = '1.7.0.0'
-    end
-  end
-  object styConferma: TAdvFormStyler
-    Style = tsWindows8
-    Left = 32
-    Top = 120
   end
 end

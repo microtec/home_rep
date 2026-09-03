@@ -6,7 +6,7 @@ accesso con PIN, ruoli e permessi per area, home con le aree applicative abilita
 ## Requisiti
 
 - Delphi 10.2 Tokyo (Win32)
-- TMS VCL UI Pack installato (TAdvPanel, TAdvEdit, TAdvGlowButton, TAdvFormStyler)
+- Solo VCL standard e FireDAC: nessuna libreria di componenti di terze parti
 - Firebird 2.5 (server o embedded) e relativo `fbclient.dll` / `fbembed.dll` a 32 bit
 
 ## Struttura
@@ -15,14 +15,15 @@ accesso con PIN, ruoli e permessi per area, home con le aree applicative abilita
 | --- | --- |
 | `Zonico.dpr` / `Zonico.dproj` | progetto Delphi 10.2 |
 | `src/uLogin.pas` | pagina di accesso con PIN (modale), logo e tastierino |
-| `src/uTastierino.pas` | tastierino numerico con tasti rotondi disegnati |
+| `src/uControlliMetro.pas` | pulsanti piatti, tasti rotondi e tastierino disegnati |
+| `src/uFormBase.pas` | modello di form modale da cui derivare le altre form |
 | `src/uMain.pas` | home con le aree applicative abilitate |
 | `src/uConferma.pas` | form modale unica per conferme e avvisi |
 | `src/uDM.pas` | data module: connessione FireDAC/Firebird |
 | `src/uDbFirebird.pas` | verifica presenza dello schema su `RDB$RELATIONS` |
 | `src/uUtenteRepository.pas` | autenticazione PIN, ruolo e permessi area |
 | `sql/zonico_schema.sql` | script di creazione del database Firebird 2.5 |
-| `src/uAppTheme.pas` | palette colori, stile TMS e caricamento font |
+| `src/uAppTheme.pas` | palette colori e caricamento font |
 | `fonts/` | Comfortaa (OFL) caricato a runtime |
 | `images/logo.png` | immagine della login, sostituibile senza ricompilare |
 
@@ -31,7 +32,9 @@ accesso con PIN, ruoli e permessi per area, home con le aree applicative abilita
 - **Font**: Comfortaa su tutte le form. Se non è installato nel sistema viene registrato a runtime
   (`AddFontResourceEx`, solo per il processo) dal file `fonts/Comfortaa-Variable.ttf` che deve essere
   copiato accanto all'eseguibile.
-- **Stile**: look Metro tramite `TAdvFormStyler` (`tsWindows8`) impostato in `uAppTheme`.
+- **Stile**: look Metro ottenuto con controlli disegnati in `uControlliMetro` (superfici piatte,
+  nessun gradiente o bevel, stati hover/press sull'accento azzurro). I pulsanti sono creati a
+  runtime, quindi non serve installare componenti nell'IDE.
 - **Colori**: palette azzurro / grigio / bianco definita in `uAppTheme` (`clZonicoAzzurro`,
   `clZonicoGrigio`, `clZonicoBianco`, ...).
 - **Conferme**: ogni conferma o avviso passa da `TfrmConferma`, sempre aperta con `ShowModal`.
@@ -60,6 +63,25 @@ nella home le aree non permesse restano disabilitate.
 | `AMMI` | Amministrazione |
 
 I contenuti delle aree non sono ancora implementati: i pulsanti mostrano un avviso modale.
+
+## Nuove form
+
+`TfrmBase` (<code>src/uFormBase.pas</code>) e' il modello per le prossime form: testata azzurra con
+`Titolo` / `Descrizione`, corpo vuoto (`pnlCorpo`) e barra comandi con Conferma / Annulla gia'
+collegati. La form derivata ridefinisce i punti di estensione:
+
+```pascal
+TfrmClienti = class(TfrmBase)
+protected
+  procedure Inizializza; override;                     // controlli su pnlCorpo
+  function Valida(out AMessaggio: string): Boolean; override;
+  procedure Salva; override;                           // solo se Valida = True
+end;
+
+if TfrmClienti.Esegui(Self) then ...                   // sempre ShowModal
+```
+
+Invio conferma, Esc annulla (con richiesta di conferma tramite `TfrmConferma`).
 
 ## Database
 

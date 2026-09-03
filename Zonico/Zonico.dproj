@@ -75,7 +75,11 @@
         </DCCReference>
         <DCCReference Include="src\uUtenteRepository.pas"/>
         <DCCReference Include="src\uDbFirebird.pas"/>
-        <DCCReference Include="src\uTastierino.pas"/>
+        <DCCReference Include="src\uControlliMetro.pas"/>
+        <DCCReference Include="src\uFormBase.pas">
+            <Form>frmBase</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <DCCReference Include="src\uAppTheme.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>

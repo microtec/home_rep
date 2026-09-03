@@ -19,28 +19,17 @@ object frmLogin: TfrmLogin
   OnKeyPress = FormKeyPress
   PixelsPerInch = 96
   TextHeight = 16
-  object pnlBrand: TAdvPanel
+  object pnlBrand: TPanel
     Left = 0
     Top = 0
     Width = 280
     Height = 520
     Align = alLeft
+    BevelOuter = bvNone
+    Color = 15245660
+    ParentBackground = False
     ParentColor = False
     TabOrder = 0
-    Version = '2.4.0.0'
-    BorderColor = clNone
-    Caption.Text = ''
-    Caption.Visible = False
-    Fill.Color = 15245660
-    Fill.ColorTo = 15245660
-    Fill.BorderColor = clNone
-    Fill.ShadowColor = clNone
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWhite
-    Font.Height = -13
-    Font.Name = 'Comfortaa'
-    Font.Style = []
-    ParentFont = False
     object imgLogo: TImage
       Left = 60
       Top = 120
@@ -84,28 +73,17 @@ object frmLogin: TfrmLogin
       Transparent = True
     end
   end
-  object pnlAccesso: TAdvPanel
+  object pnlAccesso: TPanel
     Left = 280
     Top = 0
     Width = 440
     Height = 520
     Align = alClient
+    BevelOuter = bvNone
+    Color = clWhite
+    ParentBackground = False
     ParentColor = False
     TabOrder = 1
-    Version = '2.4.0.0'
-    BorderColor = clNone
-    Caption.Text = ''
-    Caption.Visible = False
-    Fill.Color = clWhite
-    Fill.ColorTo = clWhite
-    Fill.BorderColor = clNone
-    Fill.ShadowColor = clNone
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = 7893602
-    Font.Height = -13
-    Font.Name = 'Comfortaa'
-    Font.Style = []
-    ParentFont = False
     object lblPin: TLabel
       Left = 60
       Top = 40
@@ -127,16 +105,11 @@ object frmLogin: TfrmLogin
       Font.Style = []
       ParentFont = False
     end
-    object edtPin: TAdvEdit
+    object edtPin: TEdit
       Left = 60
       Top = 62
       Width = 320
       Height = 38
-      EditType = etString
-      EmptyTextStyle = []
-      MaxLength = 8
-      PasswordChar = '#'
-      ReadOnly = True
       Alignment = taCenter
       BorderStyle = bsSingle
       Color = clWhite
@@ -145,55 +118,33 @@ object frmLogin: TfrmLogin
       Font.Height = -19
       Font.Name = 'Comfortaa'
       Font.Style = []
+      MaxLength = 8
       ParentFont = False
+      PasswordChar = '#'
+      ReadOnly = True
       TabOrder = 0
-      Version = '3.5.0.0'
-      Visible = True
-      EmptyText = 'Inserisci il PIN'
     end
-    object pnlTastierino: TAdvPanel
+    object pnlTastierino: TPanel
       Left = 60
       Top = 136
       Width = 320
       Height = 316
+      BevelOuter = bvNone
+      Color = clWhite
+      ParentBackground = False
       ParentColor = False
       TabOrder = 1
-      Version = '2.4.0.0'
-      BorderColor = clNone
-      Caption.Text = ''
-      Caption.Visible = False
-      Fill.Color = clWhite
-      Fill.ColorTo = clWhite
-      Fill.BorderColor = clNone
-      Fill.ShadowColor = clNone
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = 7893602
-      Font.Height = -13
-      Font.Name = 'Comfortaa'
-      Font.Style = []
-      ParentFont = False
     end
-    object btnEsci: TAdvGlowButton
-      Left = 280
-      Top = 466
-      Width = 100
-      Height = 34
-      Cancel = True
-      Caption = 'Esci'
-      ModalResult = 2
+    object pnlComandi: TPanel
+      Left = 60
+      Top = 460
+      Width = 320
+      Height = 40
+      BevelOuter = bvNone
+      Color = clWhite
+      ParentBackground = False
+      ParentColor = False
       TabOrder = 2
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = 7893602
-      Font.Height = -13
-      Font.Name = 'Comfortaa'
-      Font.Style = []
-      ParentFont = False
-      Version = '1.7.0.0'
     end
-  end
-  object styLogin: TAdvFormStyler
-    Style = tsWindows8
-    Left = 640
-    Top = 468
   end
 end

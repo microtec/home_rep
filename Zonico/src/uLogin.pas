@@ -4,29 +4,30 @@ interface
 
 uses
   System.Classes, Vcl.Controls, Vcl.Forms, Vcl.StdCtrls, Vcl.ExtCtrls,
-  AdvPanel, AdvEdit, AdvGlowButton, AdvAppStyler, AdvStyleIF,
-  uUtenteRepository, uTastierino;
+  uUtenteRepository, uControlliMetro;
 
 type
   TfrmLogin = class(TForm)
-    pnlBrand: TAdvPanel;
+    pnlBrand: TPanel;
     imgLogo: TImage;
     lblTitolo: TLabel;
     lblSottotitolo: TLabel;
-    pnlAccesso: TAdvPanel;
+    pnlAccesso: TPanel;
     lblPin: TLabel;
-    edtPin: TAdvEdit;
+    edtPin: TEdit;
     lblRegola: TLabel;
-    pnlTastierino: TAdvPanel;
-    btnEsci: TAdvGlowButton;
-    styLogin: TAdvFormStyler;
+    pnlTastierino: TPanel;
+    pnlComandi: TPanel;
     procedure FormCreate(Sender: TObject);
     procedure FormKeyPress(Sender: TObject; var Key: Char);
   private
     FUtente: TUtente;
     FTastierino: TTastierinoNumerico;
+    FBtnEsci: TPulsanteMetro;
     procedure CaricaImmagine;
     procedure CreaTastierino;
+    procedure CreaComandi;
+    procedure EsciClick(Sender: TObject);
     procedure TastoPremuto(Sender: TObject; ATipo: TTastoTipo;
       const ACifra: string);
     procedure AggiungiCifra(const ACifra: string);
@@ -54,7 +55,7 @@ const
 
 procedure TfrmLogin.FormCreate(Sender: TObject);
 begin
-  ApplicaTemaColori(Self, styLogin);
+  ApplicaTemaColori(Self);
   KeyPreview := True;
   edtPin.MaxLength := PinLunghezzaMax;
   edtPin.PasswordChar := #9679;
@@ -63,6 +64,7 @@ begin
     [PinLunghezzaMin, PinLunghezzaMax]);
   CaricaImmagine;
   CreaTastierino;
+  CreaComandi;
 end;
 
 // Immagine di personalizzazione: images\logo.png accanto all'eseguibile,
@@ -95,6 +97,19 @@ begin
   FTastierino.Parent := pnlTastierino;
   FTastierino.Align := alClient;
   FTastierino.OnTasto := TastoPremuto;
+end;
+
+procedure TfrmLogin.CreaComandi;
+begin
+  FBtnEsci := TPulsanteMetro.Crea(pnlComandi, 'Esci',
+    pnlComandi.Width - 110, 3, 110, 34, EsciClick);
+  FBtnEsci.ColoreBase := clZonicoGrigioChiaro;
+  FBtnEsci.ColoreTesto := clZonicoGrigio;
+end;
+
+procedure TfrmLogin.EsciClick(Sender: TObject);
+begin
+  ModalResult := mrCancel;
 end;
 
 procedure TfrmLogin.TastoPremuto(Sender: TObject; ATipo: TTastoTipo;

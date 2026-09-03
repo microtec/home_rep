@@ -5,28 +5,23 @@ interface
 uses
   System.SysUtils, System.Classes, Vcl.Controls, Vcl.Forms, Vcl.StdCtrls,
   Vcl.ExtCtrls, Vcl.ComCtrls,
-  AdvPanel, AdvGlowButton, AdvObj, AdvAppStyler, AdvStyleIF;
+  uControlliMetro;
 
 type
   TfrmMain = class(TForm)
-    pnlTop: TAdvPanel;
+    pnlTop: TPanel;
     lblTitolo: TLabel;
     lblSottotitolo: TLabel;
-    btnEsci: TAdvGlowButton;
-    pnlAree: TAdvPanel;
-    btnAreaAnag: TAdvGlowButton;
-    btnAreaVend: TAdvGlowButton;
-    btnAreaRepo: TAdvGlowButton;
-    btnAreaAmmi: TAdvGlowButton;
+    pnlAree: TPanel;
     stbStato: TStatusBar;
-    styMain: TAdvFormStyler;
     procedure FormCreate(Sender: TObject);
-    procedure AreaClick(Sender: TObject);
-    procedure btnEsciClick(Sender: TObject);
   private
-    function PulsantiAree: TArray<TAdvGlowButton>;
-    function CodiceArea(APulsante: TAdvGlowButton): string;
+    FPulsanti: array[0..3] of TPulsanteMetro;
+    FBtnEsci: TPulsanteMetro;
+    procedure CreaPulsanti;
     procedure ApplicaPermessi;
+    procedure AreaClick(Sender: TObject);
+    procedure EsciClick(Sender: TObject);
   end;
 
 var
@@ -35,49 +30,63 @@ var
 implementation
 
 uses
-  System.UITypes, uDM, uConferma, uAppTheme, uUtenteRepository;
+  uDM, uConferma, uAppTheme;
 
 {$R *.dfm}
 
-// Codici delle aree in AREE.AR_CODICE, nello stesso ordine di PulsantiAree.
+// Codici e titoli delle aree, nello stesso ordine dei pulsanti.
 const
   CodiciAree: array[0..3] of string = ('ANAG', 'VEND', 'REPO', 'AMMI');
-
-function TfrmMain.PulsantiAree: TArray<TAdvGlowButton>;
-begin
-  Result := [btnAreaAnag, btnAreaVend, btnAreaRepo, btnAreaAmmi];
-end;
-
-function TfrmMain.CodiceArea(APulsante: TAdvGlowButton): string;
-var
-  LIndice: Integer;
-begin
-  for LIndice := Low(CodiciAree) to High(CodiciAree) do
-    if PulsantiAree[LIndice] = APulsante then
-      Exit(CodiciAree[LIndice]);
-  Result := '';
-end;
+  TitoliAree: array[0..3] of string = ('Anagrafiche e Magazzino',
+    'Vendite e Contabilita', 'Report', 'Amministrazione');
+  LarghezzaArea = 340;
+  AltezzaArea = 120;
+  SpazioArea = 24;
 
 procedure TfrmMain.FormCreate(Sender: TObject);
 begin
-  ApplicaTemaColori(Self, styMain);
+  ApplicaTemaColori(Self);
   lblSottotitolo.Caption := Format('%s - %s',
     [dmZonico.UtenteCorrente.Descrizione, dmZonico.UtenteCorrente.Ruolo]);
+  CreaPulsanti;
   ApplicaPermessi;
+end;
+
+procedure TfrmMain.CreaPulsanti;
+var
+  LIndice, LRiga, LColonna, LSinistra, LAlto: Integer;
+begin
+  LSinistra := (pnlAree.Width - (2 * LarghezzaArea + SpazioArea)) div 2;
+  LAlto := 60;
+  for LIndice := Low(CodiciAree) to High(CodiciAree) do
+  begin
+    LRiga := LIndice div 2;
+    LColonna := LIndice mod 2;
+    FPulsanti[LIndice] := TPulsanteMetro.Crea(pnlAree, TitoliAree[LIndice],
+      LSinistra + LColonna * (LarghezzaArea + SpazioArea),
+      LAlto + LRiga * (AltezzaArea + SpazioArea),
+      LarghezzaArea, AltezzaArea, AreaClick);
+    FPulsanti[LIndice].Tag := LIndice;
+    FPulsanti[LIndice].Font.Height := -17;
+  end;
+
+  FBtnEsci := TPulsanteMetro.Crea(pnlAree, 'Esci',
+    pnlAree.Width - 150, pnlAree.Height - 60, 120, 36, EsciClick);
+  FBtnEsci.Anchors := [akRight, akBottom];
+  FBtnEsci.ColoreBase := clZonicoGrigioChiaro;
+  FBtnEsci.ColoreTesto := clZonicoGrigio;
 end;
 
 procedure TfrmMain.ApplicaPermessi;
 var
-  LIndice: Integer;
-  LPulsante: TAdvGlowButton;
-  LAbilitate: Integer;
+  LIndice, LAbilitate: Integer;
 begin
   LAbilitate := 0;
   for LIndice := Low(CodiciAree) to High(CodiciAree) do
   begin
-    LPulsante := PulsantiAree[LIndice];
-    LPulsante.Enabled := dmZonico.UtenteCorrente.HaArea(CodiciAree[LIndice]);
-    if LPulsante.Enabled then
+    FPulsanti[LIndice].Enabled :=
+      dmZonico.UtenteCorrente.HaArea(CodiciAree[LIndice]);
+    if FPulsanti[LIndice].Enabled then
       Inc(LAbilitate);
   end;
 
@@ -87,10 +96,10 @@ end;
 
 procedure TfrmMain.AreaClick(Sender: TObject);
 var
-  LPulsante: TAdvGlowButton;
+  LPulsante: TPulsanteMetro;
 begin
-  LPulsante := Sender as TAdvGlowButton;
-  if not dmZonico.UtenteCorrente.HaArea(CodiceArea(LPulsante)) then
+  LPulsante := Sender as TPulsanteMetro;
+  if not dmZonico.UtenteCorrente.HaArea(CodiciAree[LPulsante.Tag]) then
   begin
     TfrmConferma.Avvisa(Self, 'Accesso negato',
       'Il ruolo corrente non e'' abilitato a questa area.');
@@ -101,7 +110,7 @@ begin
     'Area non ancora implementata.');
 end;
 
-procedure TfrmMain.btnEsciClick(Sender: TObject);
+procedure TfrmMain.EsciClick(Sender: TObject);
 begin
   if TfrmConferma.Chiedi(Self, 'Esci', 'Chiudere Zonico?') then
     Close;

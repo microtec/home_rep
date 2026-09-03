@@ -1,25 +1,29 @@
-object frmMain: TfrmMain
+object frmBase: TfrmBase
   Left = 0
   Top = 0
+  BorderIcons = [biSystemMenu]
+  BorderStyle = bsDialog
   Caption = 'Zonico'
-  ClientHeight = 560
-  ClientWidth = 900
+  ClientHeight = 460
+  ClientWidth = 640
   Color = clWhite
   Font.Charset = DEFAULT_CHARSET
   Font.Color = 7893602
   Font.Height = -13
   Font.Name = 'Comfortaa'
   Font.Style = []
+  KeyPreview = True
   OldCreateOrder = False
-  Position = poScreenCenter
+  Position = poMainFormCenter
   OnCreate = FormCreate
+  OnKeyPress = FormKeyPress
   PixelsPerInch = 96
   TextHeight = 16
-  object pnlTop: TPanel
+  object pnlTestata: TPanel
     Left = 0
     Top = 0
-    Width = 900
-    Height = 96
+    Width = 640
+    Height = 72
     Align = alTop
     BevelOuter = bvNone
     Color = 15245660
@@ -27,40 +31,41 @@ object frmMain: TfrmMain
     ParentColor = False
     TabOrder = 0
     object lblTitolo: TLabel
-      Left = 32
-      Top = 20
-      Width = 120
-      Height = 34
-      Caption = 'Zonico'
+      Left = 24
+      Top = 14
+      Width = 400
+      Height = 26
+      AutoSize = False
+      Caption = 'Titolo'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWhite
-      Font.Height = -27
+      Font.Height = -21
       Font.Name = 'Comfortaa'
       Font.Style = []
       ParentFont = False
       Transparent = True
     end
-    object lblSottotitolo: TLabel
-      Left = 34
-      Top = 60
-      Width = 400
-      Height = 20
+    object lblDescrizione: TLabel
+      Left = 26
+      Top = 44
+      Width = 560
+      Height = 18
       AutoSize = False
-      Caption = 'Utente'
+      Caption = ''
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWhite
-      Font.Height = -13
+      Font.Height = -12
       Font.Name = 'Comfortaa'
       Font.Style = []
       ParentFont = False
       Transparent = True
     end
   end
-  object pnlAree: TPanel
+  object pnlCorpo: TPanel
     Left = 0
-    Top = 96
-    Width = 900
-    Height = 445
+    Top = 72
+    Width = 640
+    Height = 320
     Align = alClient
     BevelOuter = bvNone
     Color = clWhite
@@ -68,12 +73,16 @@ object frmMain: TfrmMain
     ParentColor = False
     TabOrder = 1
   end
-  object stbStato: TStatusBar
+  object pnlComandi: TPanel
     Left = 0
-    Top = 541
-    Width = 900
-    Height = 19
-    Panels = <>
-    SimplePanel = True
+    Top = 392
+    Width = 640
+    Height = 68
+    Align = alBottom
+    BevelOuter = bvNone
+    Color = 15789804
+    ParentBackground = False
+    ParentColor = False
+    TabOrder = 2
   end
 end

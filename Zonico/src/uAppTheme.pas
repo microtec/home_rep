@@ -3,11 +3,10 @@ unit uAppTheme;
 interface
 
 uses
-  Winapi.Windows, Vcl.Graphics, Vcl.Forms, AdvStyleIF, AdvAppStyler;
+  Winapi.Windows, Vcl.Graphics, Vcl.Forms;
 
 const
   ZonicoFontName = 'Comfortaa';
-  ZonicoTMSStyle = tsWindows8; // look Metro dei TMS VCL UI Pack
 
   // Palette applicativa: azzurro / grigio / bianco.
   clZonicoAzzurro       = TColor($00E8A15C); // #5CA1E8
@@ -18,7 +17,8 @@ const
   clZonicoBordo         = TColor($00D8D2CC); // #CCD2D8
   clZonicoBianco        = clWhite;
 
-procedure ApplicaTemaColori(AForm: TForm; AStyler: TAdvFormStyler);
+// Look Metro: superfici piatte, niente bevel o gradienti, accento azzurro.
+procedure ApplicaTemaColori(AForm: TForm);
 
 // Registra il font Comfortaa incluso in fonts\ senza installarlo nel sistema.
 function CaricaFontComfortaa: Boolean;
@@ -27,25 +27,19 @@ procedure RilasciaFontComfortaa;
 implementation
 
 uses
-  System.SysUtils, System.IOUtils;
+  Winapi.Messages, System.SysUtils, System.IOUtils;
 
 var
   GFontCaricato: Boolean = False;
   GFontFile: string = '';
 
-procedure ApplicaTemaColori(AForm: TForm; AStyler: TAdvFormStyler);
+procedure ApplicaTemaColori(AForm: TForm);
 begin
-  if Assigned(AStyler) then
-  begin
-    AStyler.Style := ZonicoTMSStyle;
-    AStyler.AppColor := clZonicoAzzurro;
-  end;
-  if Assigned(AForm) then
-  begin
-    AForm.Color := clZonicoBianco;
-    AForm.Font.Name := ZonicoFontName;
-    AForm.Font.Color := clZonicoGrigio;
-  end;
+  if not Assigned(AForm) then
+    Exit;
+  AForm.Color := clZonicoBianco;
+  AForm.Font.Name := ZonicoFontName;
+  AForm.Font.Color := clZonicoGrigio;
 end;
 
 function FontDisponibile(const AFontName: string): Boolean;
