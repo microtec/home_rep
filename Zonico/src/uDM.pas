@@ -54,22 +54,40 @@ end;
 procedure TdmZonico.ConfiguraConnessione;
 var
   LIni: TIniFile;
-  LDatabase, LUser, LPassword, LProtocol, LServer, LClientLib, LCharset: string;
+  LAlias, LPercorso, LDatabase, LUser, LPassword, LProtocol, LIndirizzo,
+  LClientLib, LCharset: string;
   LPort: Integer;
 begin
+  if not FileExists(FileConfigurazione) then
+    raise Exception.CreateFmt(
+      'File di configurazione non trovato: %s', [FileConfigurazione]);
+
   LIni := TIniFile.Create(FileConfigurazione);
   try
-    LDatabase := LIni.ReadString(SezioneDatabase, 'Database', 'C:\Zonico\ZONICO.FDB');
+    LIndirizzo := LIni.ReadString(SezioneDatabase, 'IndirizzoIP', 'localhost');
+    LAlias := Trim(LIni.ReadString(SezioneDatabase, 'Alias', 'ZONICO'));
+    LPercorso := Trim(LIni.ReadString(SezioneDatabase, 'Percorso', ''));
     LUser := LIni.ReadString(SezioneDatabase, 'User_Name', 'SYSDBA');
     LPassword := LIni.ReadString(SezioneDatabase, 'Password', 'masterkey');
     LProtocol := LIni.ReadString(SezioneDatabase, 'Protocol', 'TCPIP');
-    LServer := LIni.ReadString(SezioneDatabase, 'Server', 'localhost');
     LPort := LIni.ReadInteger(SezioneDatabase, 'Port', 3050);
     LCharset := LIni.ReadString(SezioneDatabase, 'CharacterSet', 'ISO8859_1');
     LClientLib := LIni.ReadString(SezioneDatabase, 'VendorLib', '');
   finally
     LIni.Free;
   end;
+
+  // L'alias e' definito in aliases.conf sul server Firebird; il percorso
+  // completo del file .FDB e' l'alternativa quando l'alias non e' configurato.
+  if LAlias <> '' then
+    LDatabase := LAlias
+  else
+    LDatabase := LPercorso;
+
+  if LDatabase = '' then
+    raise Exception.CreateFmt(
+      'Configurare Alias o Percorso nella sezione [%s] di %s',
+      [SezioneDatabase, FileConfigurazione]);
 
   // Firebird 2.5: client fbclient.dll (o fbembed.dll con Protocol=Local).
   drvFirebird.VendorLib := LClientLib;
@@ -83,7 +101,7 @@ begin
   conZonico.Params.Add('CharacterSet=' + LCharset);
   if SameText(LProtocol, 'TCPIP') then
   begin
-    conZonico.Params.Add('Server=' + LServer);
+    conZonico.Params.Add('Server=' + LIndirizzo);
     conZonico.Params.Add('Port=' + IntToStr(LPort));
   end;
 end;

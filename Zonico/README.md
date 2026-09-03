@@ -45,9 +45,21 @@ con PIN `12345`, da cambiare con `TUtenteRepository.ImpostaPin`.
 
 ## Database
 
-Firebird 2.5, connessione FireDAC `DriverID=FB` configurata in `Zonico.ini` accanto
-all'eseguibile (vedi `Zonico.ini.sample`: percorso `.FDB`, credenziali, `Protocol=TCPIP` per il
-server o `Local` per l'embedded, `VendorLib` per il client Firebird da caricare).
+Firebird 2.5, connessione FireDAC `DriverID=FB` configurata nel file `Zonico.ini` che deve
+essere copiato accanto all'eseguibile. Sezione `[DATABASE]`:
+
+| Chiave | Significato |
+| --- | --- |
+| `IndirizzoIP` | IP o nome host del server Firebird |
+| `Port` | porta del servizio (default `3050`) |
+| `Alias` | alias del database definito in `aliases.conf` sul server |
+| `Percorso` | percorso completo del `.FDB`, usato solo se `Alias` e' vuoto |
+| `User_Name` / `Password` | credenziali del database |
+| `Protocol` | `TCPIP` per il server, `Local` per embedded |
+| `CharacterSet` | set di caratteri della connessione |
+| `VendorLib` | `fbclient.dll` 32 bit da caricare (vuoto = ricerca nel PATH) |
+
+Se il file manca o non contiene ne' `Alias` ne' `Percorso` l'avvio si interrompe con un errore.
 
 Il database deve esistere: creare il file `.FDB` con `gbak`/`isql` prima del primo avvio.
 Le tabelle vengono create dall'applicazione se mancanti (Firebird 2.5 non supporta
