@@ -75,6 +75,7 @@
         </DCCReference>
         <DCCReference Include="src\uUtenteRepository.pas"/>
         <DCCReference Include="src\uDbFirebird.pas"/>
+        <DCCReference Include="src\uTastierino.pas"/>
         <DCCReference Include="src\uAppTheme.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>

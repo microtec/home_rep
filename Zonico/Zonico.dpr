@@ -8,6 +8,7 @@ uses
   uConferma in 'src\uConferma.pas' {frmConferma},
   uUtenteRepository in 'src\uUtenteRepository.pas',
   uDbFirebird in 'src\uDbFirebird.pas',
+  uTastierino in 'src\uTastierino.pas',
   uAppTheme in 'src\uAppTheme.pas';
 
 {$R *.res}

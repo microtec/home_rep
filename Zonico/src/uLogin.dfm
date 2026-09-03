@@ -4,60 +4,77 @@ object frmLogin: TfrmLogin
   BorderIcons = [biSystemMenu]
   BorderStyle = bsDialog
   Caption = 'Zonico - Accesso'
-  ClientHeight = 300
-  ClientWidth = 400
+  ClientHeight = 520
+  ClientWidth = 720
   Color = clWhite
   Font.Charset = DEFAULT_CHARSET
   Font.Color = 7893602
   Font.Height = -13
   Font.Name = 'Comfortaa'
   Font.Style = []
+  KeyPreview = True
   OldCreateOrder = False
   Position = poScreenCenter
   OnCreate = FormCreate
+  OnKeyPress = FormKeyPress
   PixelsPerInch = 96
   TextHeight = 16
-  object pnlTestata: TAdvPanel
+  object pnlBrand: TAdvPanel
     Left = 0
     Top = 0
-    Width = 400
-    Height = 90
-    Align = alTop
+    Width = 280
+    Height = 520
+    Align = alLeft
     ParentColor = False
     TabOrder = 0
     Version = '2.4.0.0'
     BorderColor = clNone
     Caption.Text = ''
     Caption.Visible = False
-    Fill.Color = 15265244
-    Fill.ColorTo = 13204027
+    Fill.Color = 15245660
+    Fill.ColorTo = 15245660
     Fill.BorderColor = clNone
+    Fill.ShadowColor = clNone
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWhite
     Font.Height = -13
     Font.Name = 'Comfortaa'
     Font.Style = []
     ParentFont = False
+    object imgLogo: TImage
+      Left = 60
+      Top = 120
+      Width = 160
+      Height = 160
+      Center = True
+      Proportional = True
+      Stretch = True
+      Transparent = True
+    end
     object lblTitolo: TLabel
-      Left = 24
-      Top = 20
-      Width = 90
-      Height = 27
+      Left = 0
+      Top = 300
+      Width = 280
+      Height = 34
+      Alignment = taCenter
+      AutoSize = False
       Caption = 'Zonico'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWhite
-      Font.Height = -21
+      Font.Height = -27
       Font.Name = 'Comfortaa'
-      Font.Style = [fsBold]
+      Font.Style = []
       ParentFont = False
       Transparent = True
     end
     object lblSottotitolo: TLabel
-      Left = 26
-      Top = 54
-      Width = 122
-      Height = 16
-      Caption = 'Gestione zone'
+      Left = 0
+      Top = 340
+      Width = 280
+      Height = 20
+      Alignment = taCenter
+      AutoSize = False
+      Caption = 'Gestione aziendale'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWhite
       Font.Height = -13
@@ -67,11 +84,11 @@ object frmLogin: TfrmLogin
       Transparent = True
     end
   end
-  object pnlCampi: TAdvPanel
-    Left = 0
-    Top = 90
-    Width = 400
-    Height = 140
+  object pnlAccesso: TAdvPanel
+    Left = 280
+    Top = 0
+    Width = 440
+    Height = 520
     Align = alClient
     ParentColor = False
     TabOrder = 1
@@ -82,6 +99,7 @@ object frmLogin: TfrmLogin
     Fill.Color = clWhite
     Fill.ColorTo = clWhite
     Fill.BorderColor = clNone
+    Fill.ShadowColor = clNone
     Font.Charset = DEFAULT_CHARSET
     Font.Color = 7893602
     Font.Height = -13
@@ -89,38 +107,42 @@ object frmLogin: TfrmLogin
     Font.Style = []
     ParentFont = False
     object lblPin: TLabel
-      Left = 40
-      Top = 26
+      Left = 60
+      Top = 40
       Width = 24
       Height = 16
       Caption = 'PIN'
     end
     object lblRegola: TLabel
-      Left = 40
-      Top = 88
-      Width = 200
+      Left = 60
+      Top = 108
+      Width = 320
       Height = 16
+      AutoSize = False
       Caption = 'PIN numerico da 5 a 8 cifre'
       Font.Charset = DEFAULT_CHARSET
-      Font.Color = 14209752
+      Font.Color = 14209740
       Font.Height = -12
       Font.Name = 'Comfortaa'
       Font.Style = []
       ParentFont = False
     end
     object edtPin: TAdvEdit
-      Left = 40
-      Top = 48
+      Left = 60
+      Top = 62
       Width = 320
-      Height = 32
+      Height = 38
       EditType = etString
       EmptyTextStyle = []
       MaxLength = 8
       PasswordChar = '#'
+      ReadOnly = True
+      Alignment = taCenter
+      BorderStyle = bsSingle
       Color = clWhite
       Font.Charset = DEFAULT_CHARSET
       Font.Color = 7893602
-      Font.Height = -16
+      Font.Height = -19
       Font.Name = 'Comfortaa'
       Font.Style = []
       ParentFont = False
@@ -129,54 +151,37 @@ object frmLogin: TfrmLogin
       Visible = True
       EmptyText = 'Inserisci il PIN'
     end
-  end
-  object pnlBottoni: TAdvPanel
-    Left = 0
-    Top = 230
-    Width = 400
-    Height = 70
-    Align = alBottom
-    ParentColor = False
-    TabOrder = 2
-    Version = '2.4.0.0'
-    BorderColor = clNone
-    Caption.Text = ''
-    Caption.Visible = False
-    Fill.Color = 15527152
-    Fill.ColorTo = 15527152
-    Fill.BorderColor = 14209752
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = 7893602
-    Font.Height = -13
-    Font.Name = 'Comfortaa'
-    Font.Style = []
-    ParentFont = False
-    object btnAccedi: TAdvGlowButton
-      Left = 148
-      Top = 18
-      Width = 110
-      Height = 34
-      Caption = 'Accedi'
-      Default = True
-      TabOrder = 0
+    object pnlTastierino: TAdvPanel
+      Left = 60
+      Top = 136
+      Width = 320
+      Height = 316
+      ParentColor = False
+      TabOrder = 1
+      Version = '2.4.0.0'
+      BorderColor = clNone
+      Caption.Text = ''
+      Caption.Visible = False
+      Fill.Color = clWhite
+      Fill.ColorTo = clWhite
+      Fill.BorderColor = clNone
+      Fill.ShadowColor = clNone
       Font.Charset = DEFAULT_CHARSET
       Font.Color = 7893602
       Font.Height = -13
       Font.Name = 'Comfortaa'
       Font.Style = []
       ParentFont = False
-      Version = '1.7.0.0'
-      OnClick = btnAccediClick
     end
     object btnEsci: TAdvGlowButton
-      Left = 270
-      Top = 18
-      Width = 110
+      Left = 280
+      Top = 466
+      Width = 100
       Height = 34
       Cancel = True
       Caption = 'Esci'
       ModalResult = 2
-      TabOrder = 1
+      TabOrder = 2
       Font.Charset = DEFAULT_CHARSET
       Font.Color = 7893602
       Font.Height = -13
@@ -188,7 +193,7 @@ object frmLogin: TfrmLogin
   end
   object styLogin: TAdvFormStyler
     Style = tsWindows8
-    Left = 328
-    Top = 244
+    Left = 640
+    Top = 468
   end
 end

@@ -14,7 +14,8 @@ accesso con PIN, ruoli e permessi per area, home con le aree applicative abilita
 | Percorso | Contenuto |
 | --- | --- |
 | `Zonico.dpr` / `Zonico.dproj` | progetto Delphi 10.2 |
-| `src/uLogin.pas` | pagina di accesso con PIN (modale) |
+| `src/uLogin.pas` | pagina di accesso con PIN (modale), logo e tastierino |
+| `src/uTastierino.pas` | tastierino numerico con tasti rotondi disegnati |
 | `src/uMain.pas` | home con le aree applicative abilitate |
 | `src/uConferma.pas` | form modale unica per conferme e avvisi |
 | `src/uDM.pas` | data module: connessione FireDAC/Firebird |
@@ -23,6 +24,7 @@ accesso con PIN, ruoli e permessi per area, home con le aree applicative abilita
 | `sql/zonico_schema.sql` | script di creazione del database Firebird 2.5 |
 | `src/uAppTheme.pas` | palette colori, stile TMS e caricamento font |
 | `fonts/` | Comfortaa (OFL) caricato a runtime |
+| `images/logo.png` | immagine della login, sostituibile senza ricompilare |
 
 ## Interfaccia
 
@@ -33,6 +35,9 @@ accesso con PIN, ruoli e permessi per area, home con le aree applicative abilita
 - **Colori**: palette azzurro / grigio / bianco definita in `uAppTheme` (`clZonicoAzzurro`,
   `clZonicoGrigio`, `clZonicoBianco`, ...).
 - **Conferme**: ogni conferma o avviso passa da `TfrmConferma`, sempre aperta con `ShowModal`.
+- **Login**: pannello azzurro a sinistra con l'immagine `images/logo.png` e, a destra, il PIN
+  mascherato con il tastierino numerico (`TTastierinoNumerico`): tasti rotondi flat 1-9, `C`
+  (cancella l'ultima cifra), `0` e `OK`. Il PIN si puo' comporre anche da tastiera fisica.
 
 ## Accesso
 
@@ -96,4 +101,6 @@ Aprire `Zonico.dproj` in Delphi 10.2 e compilare (Win32), oppure da riga di coma
 msbuild Zonico.dproj /t:Build /p:Config=Release /p:Platform=Win32
 ```
 
-Copiare la cartella `fonts` accanto all'eseguibile prodotto in `bin\Win32\Release`.
+Copiare le cartelle `fonts` e `images` accanto all'eseguibile prodotto in `bin\Win32\Release`.
+Per personalizzare la login basta sostituire `images/logo.png` (PNG, area 160x160); se il file
+manca la login mostra solo il testo.
