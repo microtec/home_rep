@@ -1,0 +1,150 @@
+object frmLogin: TfrmLogin
+  Left = 0
+  Top = 0
+  BorderIcons = [biSystemMenu]
+  BorderStyle = bsDialog
+  Caption = 'Zonico - Accesso'
+  ClientHeight = 520
+  ClientWidth = 720
+  Color = clWhite
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = 7893602
+  Font.Height = -13
+  Font.Name = 'Comfortaa'
+  Font.Style = []
+  KeyPreview = True
+  OldCreateOrder = False
+  Position = poScreenCenter
+  OnCreate = FormCreate
+  OnKeyPress = FormKeyPress
+  PixelsPerInch = 96
+  TextHeight = 16
+  object pnlBrand: TPanel
+    Left = 0
+    Top = 0
+    Width = 280
+    Height = 520
+    Align = alLeft
+    BevelOuter = bvNone
+    Color = 15245660
+    ParentBackground = False
+    ParentColor = False
+    TabOrder = 0
+    object imgLogo: TImage
+      Left = 60
+      Top = 120
+      Width = 160
+      Height = 160
+      Center = True
+      Proportional = True
+      Stretch = True
+      Transparent = True
+    end
+    object lblTitolo: TLabel
+      Left = 0
+      Top = 300
+      Width = 280
+      Height = 34
+      Alignment = taCenter
+      AutoSize = False
+      Caption = 'Zonico'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWhite
+      Font.Height = -27
+      Font.Name = 'Comfortaa'
+      Font.Style = []
+      ParentFont = False
+      Transparent = True
+    end
+    object lblSottotitolo: TLabel
+      Left = 0
+      Top = 340
+      Width = 280
+      Height = 20
+      Alignment = taCenter
+      AutoSize = False
+      Caption = 'Gestione aziendale'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWhite
+      Font.Height = -13
+      Font.Name = 'Comfortaa'
+      Font.Style = []
+      ParentFont = False
+      Transparent = True
+    end
+  end
+  object pnlAccesso: TPanel
+    Left = 280
+    Top = 0
+    Width = 440
+    Height = 520
+    Align = alClient
+    BevelOuter = bvNone
+    Color = clWhite
+    ParentBackground = False
+    ParentColor = False
+    TabOrder = 1
+    object lblPin: TLabel
+      Left = 60
+      Top = 40
+      Width = 24
+      Height = 16
+      Caption = 'PIN'
+    end
+    object lblRegola: TLabel
+      Left = 60
+      Top = 108
+      Width = 320
+      Height = 16
+      AutoSize = False
+      Caption = 'PIN numerico da 5 a 8 cifre'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = 14209740
+      Font.Height = -12
+      Font.Name = 'Comfortaa'
+      Font.Style = []
+      ParentFont = False
+    end
+    object edtPin: TEdit
+      Left = 60
+      Top = 62
+      Width = 320
+      Height = 38
+      Alignment = taCenter
+      BorderStyle = bsSingle
+      Color = clWhite
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = 7893602
+      Font.Height = -19
+      Font.Name = 'Comfortaa'
+      Font.Style = []
+      MaxLength = 8
+      ParentFont = False
+      PasswordChar = '#'
+      ReadOnly = True
+      TabOrder = 0
+    end
+    object pnlTastierino: TPanel
+      Left = 60
+      Top = 136
+      Width = 320
+      Height = 316
+      BevelOuter = bvNone
+      Color = clWhite
+      ParentBackground = False
+      ParentColor = False
+      TabOrder = 1
+    end
+    object pnlComandi: TPanel
+      Left = 60
+      Top = 460
+      Width = 320
+      Height = 40
+      BevelOuter = bvNone
+      Color = clWhite
+      ParentBackground = False
+      ParentColor = False
+      TabOrder = 2
+    end
+  end
+end
