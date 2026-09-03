@@ -4,30 +4,29 @@ interface
 
 uses
   System.SysUtils, System.Classes, Vcl.Controls, Vcl.Forms, Vcl.StdCtrls,
-  Vcl.ExtCtrls, Vcl.Grids, Vcl.ComCtrls, Data.DB,
-  AdvPanel, AdvEdit, AdvGlowButton, AdvObj, BaseGrid, AdvGrid, DBAdvGrid,
-  AdvAppStyler, AdvStyleIF;
+  Vcl.ExtCtrls, Vcl.ComCtrls,
+  AdvPanel, AdvGlowButton, AdvObj, AdvAppStyler, AdvStyleIF;
 
 type
   TfrmMain = class(TForm)
     pnlTop: TAdvPanel;
-    lblFiltro: TLabel;
-    edtFiltro: TAdvEdit;
-    btnNuova: TAdvGlowButton;
-    btnModifica: TAdvGlowButton;
-    btnElimina: TAdvGlowButton;
-    grdZone: TDBAdvGrid;
+    lblTitolo: TLabel;
+    lblSottotitolo: TLabel;
+    btnEsci: TAdvGlowButton;
+    pnlAree: TAdvPanel;
+    btnAreaAnag: TAdvGlowButton;
+    btnAreaVend: TAdvGlowButton;
+    btnAreaRepo: TAdvGlowButton;
+    btnAreaAmmi: TAdvGlowButton;
     stbStato: TStatusBar;
     styMain: TAdvFormStyler;
     procedure FormCreate(Sender: TObject);
-    procedure edtFiltroChange(Sender: TObject);
-    procedure btnNuovaClick(Sender: TObject);
-    procedure btnModificaClick(Sender: TObject);
-    procedure btnEliminaClick(Sender: TObject);
-    procedure grdZoneDblClickCell(Sender: TObject; ARow, ACol: Integer);
+    procedure AreaClick(Sender: TObject);
+    procedure btnEsciClick(Sender: TObject);
   private
-    function ZonaSelezionata(out AId: Integer): Boolean;
-    procedure AggiornaVista;
+    function PulsantiAree: TArray<TAdvGlowButton>;
+    function CodiceArea(APulsante: TAdvGlowButton): string;
+    procedure ApplicaPermessi;
   end;
 
 var
@@ -36,88 +35,76 @@ var
 implementation
 
 uses
-  System.UITypes, uDM, uZona, uZonaEdit, uConferma, uAppTheme;
+  System.UITypes, uDM, uConferma, uAppTheme, uUtenteRepository;
 
 {$R *.dfm}
+
+// Codici delle aree in AREE.AR_CODICE, nello stesso ordine di PulsantiAree.
+const
+  CodiciAree: array[0..3] of string = ('ANAG', 'VEND', 'REPO', 'AMMI');
+
+function TfrmMain.PulsantiAree: TArray<TAdvGlowButton>;
+begin
+  Result := [btnAreaAnag, btnAreaVend, btnAreaRepo, btnAreaAmmi];
+end;
+
+function TfrmMain.CodiceArea(APulsante: TAdvGlowButton): string;
+var
+  LIndice: Integer;
+begin
+  for LIndice := Low(CodiciAree) to High(CodiciAree) do
+    if PulsantiAree[LIndice] = APulsante then
+      Exit(CodiciAree[LIndice]);
+  Result := '';
+end;
 
 procedure TfrmMain.FormCreate(Sender: TObject);
 begin
   ApplicaTemaColori(Self, styMain);
-  grdZone.DataSource := dmZonico.dsZone;
-  AggiornaVista;
+  lblSottotitolo.Caption := Format('%s - %s',
+    [dmZonico.UtenteCorrente.Descrizione, dmZonico.UtenteCorrente.Ruolo]);
+  ApplicaPermessi;
 end;
 
-procedure TfrmMain.AggiornaVista;
-begin
-  dmZonico.RicaricaZone(Trim(edtFiltro.Text));
-  stbStato.SimpleText := Format('Utente: %s   |   Zone visualizzate: %d',
-    [dmZonico.UtenteCorrente.Nome, dmZonico.qryZone.RecordCount]);
-end;
-
-function TfrmMain.ZonaSelezionata(out AId: Integer): Boolean;
-begin
-  AId := 0;
-  Result := not dmZonico.qryZone.IsEmpty;
-  if Result then
-    AId := dmZonico.qryZone.FieldByName('ID').AsInteger;
-end;
-
-procedure TfrmMain.edtFiltroChange(Sender: TObject);
-begin
-  AggiornaVista;
-end;
-
-procedure TfrmMain.btnNuovaClick(Sender: TObject);
+procedure TfrmMain.ApplicaPermessi;
 var
-  LZona: TZona;
+  LIndice: Integer;
+  LPulsante: TAdvGlowButton;
+  LAbilitate: Integer;
 begin
-  LZona := Default(TZona);
-  LZona.Attiva := True;
-  if not TfrmZonaEdit.Modifica(Self, LZona) then
-    Exit;
-  if dmZonico.Repository.EsisteCodice(LZona.Codice, 0) then
+  LAbilitate := 0;
+  for LIndice := Low(CodiciAree) to High(CodiciAree) do
   begin
-    TfrmConferma.Avvisa(Self, 'Zonico', 'Esiste gia'' una zona con questo codice.');
+    LPulsante := PulsantiAree[LIndice];
+    LPulsante.Enabled := dmZonico.UtenteCorrente.HaArea(CodiciAree[LIndice]);
+    if LPulsante.Enabled then
+      Inc(LAbilitate);
+  end;
+
+  stbStato.SimpleText := Format('Utente: %s   |   Ruolo: %s   |   Aree abilitate: %d',
+    [dmZonico.UtenteCorrente.Descrizione, dmZonico.UtenteCorrente.Ruolo, LAbilitate]);
+end;
+
+procedure TfrmMain.AreaClick(Sender: TObject);
+var
+  LPulsante: TAdvGlowButton;
+begin
+  LPulsante := Sender as TAdvGlowButton;
+  if not dmZonico.UtenteCorrente.HaArea(CodiceArea(LPulsante)) then
+  begin
+    TfrmConferma.Avvisa(Self, 'Accesso negato',
+      'Il ruolo corrente non e'' abilitato a questa area.');
     Exit;
   end;
-  dmZonico.Repository.Inserisci(LZona);
-  AggiornaVista;
+
+  TfrmConferma.Avvisa(Self, LPulsante.Caption,
+    'Area non ancora implementata.');
 end;
 
-procedure TfrmMain.btnModificaClick(Sender: TObject);
-var
-  LId: Integer;
-  LZona: TZona;
+procedure TfrmMain.btnEsciClick(Sender: TObject);
 begin
-  if not ZonaSelezionata(LId) then
-    Exit;
-  LZona := dmZonico.Repository.Leggi(LId);
-  if not TfrmZonaEdit.Modifica(Self, LZona) then
-    Exit;
-  if dmZonico.Repository.EsisteCodice(LZona.Codice, LZona.Id) then
-  begin
-    TfrmConferma.Avvisa(Self, 'Zonico', 'Esiste gia'' una zona con questo codice.');
-    Exit;
-  end;
-  dmZonico.Repository.Aggiorna(LZona);
-  AggiornaVista;
-end;
-
-procedure TfrmMain.btnEliminaClick(Sender: TObject);
-var
-  LId: Integer;
-begin
-  if not ZonaSelezionata(LId) then
-    Exit;
-  if not TfrmConferma.Chiedi(Self, 'Elimina zona', 'Eliminare la zona selezionata?') then
-    Exit;
-  dmZonico.Repository.Elimina(LId);
-  AggiornaVista;
-end;
-
-procedure TfrmMain.grdZoneDblClickCell(Sender: TObject; ARow, ACol: Integer);
-begin
-  btnModificaClick(Sender);
+  if TfrmConferma.Chiedi(Self, 'Esci', 'Chiudere Zonico?') then
+    Close;
 end;
 
 end.

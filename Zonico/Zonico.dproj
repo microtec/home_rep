@@ -69,16 +69,10 @@
             <Form>frmLogin</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="src\uZonaEdit.pas">
-            <Form>frmZonaEdit</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
         <DCCReference Include="src\uConferma.pas">
             <Form>frmConferma</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="src\uZona.pas"/>
-        <DCCReference Include="src\uZonaRepository.pas"/>
         <DCCReference Include="src\uUtenteRepository.pas"/>
         <DCCReference Include="src\uDbFirebird.pas"/>
         <DCCReference Include="src\uAppTheme.pas"/>

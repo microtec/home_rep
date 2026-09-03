@@ -18,14 +18,4 @@ object dmZonico: TdmZonico
     Left = 280
     Top = 32
   end
-  object qryZone: TFDQuery
-    Connection = conZonico
-    Left = 48
-    Top = 112
-  end
-  object dsZone: TDataSource
-    DataSet = qryZone
-    Left = 168
-    Top = 112
-  end
 end

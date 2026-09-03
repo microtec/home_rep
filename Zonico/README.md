@@ -1,12 +1,12 @@
 # Zonico
 
-Applicazione desktop Delphi 10.2 Tokyo (VCL) per la gestione delle zone: ricerca, inserimento,
-modifica ed eliminazione con persistenza su database Firebird 2.5 via FireDAC.
+Applicazione gestionale desktop Delphi 10.2 Tokyo (VCL) su database Firebird 2.5 via FireDAC:
+accesso con PIN, ruoli e permessi per area, home con le aree applicative abilitate all'utente.
 
 ## Requisiti
 
 - Delphi 10.2 Tokyo (Win32)
-- TMS VCL UI Pack installato (TAdvPanel, TAdvEdit, TAdvGlowButton, TDBAdvGrid, TAdvFormStyler)
+- TMS VCL UI Pack installato (TAdvPanel, TAdvEdit, TAdvGlowButton, TAdvFormStyler)
 - Firebird 2.5 (server o embedded) e relativo `fbclient.dll` / `fbembed.dll` a 32 bit
 
 ## Struttura
@@ -15,14 +15,12 @@ modifica ed eliminazione con persistenza su database Firebird 2.5 via FireDAC.
 | --- | --- |
 | `Zonico.dpr` / `Zonico.dproj` | progetto Delphi 10.2 |
 | `src/uLogin.pas` | pagina di accesso con PIN (modale) |
-| `src/uMain.pas` | elenco zone, ricerca e comandi |
-| `src/uZonaEdit.pas` | form modale di inserimento/modifica |
+| `src/uMain.pas` | home con le aree applicative abilitate |
 | `src/uConferma.pas` | form modale unica per conferme e avvisi |
-| `src/uDM.pas` | data module: connessione FireDAC/Firebird e dataset |
-| `src/uZona.pas` | record `TZona` con validazione |
-| `src/uZonaRepository.pas` | accesso dati zone (schema + CRUD) |
-| `src/uDbFirebird.pas` | helper DDL Firebird (tabelle, generator, ID) |
-| `src/uUtenteRepository.pas` | accesso dati utenti e validazione PIN |
+| `src/uDM.pas` | data module: connessione FireDAC/Firebird |
+| `src/uDbFirebird.pas` | verifica presenza dello schema su `RDB$RELATIONS` |
+| `src/uUtenteRepository.pas` | autenticazione PIN, ruolo e permessi area |
+| `sql/zonico_schema.sql` | script di creazione del database Firebird 2.5 |
 | `src/uAppTheme.pas` | palette colori, stile TMS e caricamento font |
 | `fonts/` | Comfortaa (OFL) caricato a runtime |
 
@@ -39,9 +37,24 @@ modifica ed eliminazione con persistenza su database Firebird 2.5 via FireDAC.
 ## Accesso
 
 All'avvio viene mostrata la pagina di login modale: l'accesso avviene inserendo un PIN numerico
-di minimo 5 e massimo 8 cifre (`PinValido` in `uUtenteRepository`). Se la finestra viene chiusa
-senza autenticarsi l'applicazione termina. Al primo avvio viene creato l'utente `Amministratore`
-con PIN `12345`, da cambiare con `TUtenteRepository.ImpostaPin`.
+di minimo 5 e massimo 8 cifre (`PinValido` in `uUtenteRepository`), confrontato con `UTENTI.U_PIN`
+sui soli utenti con `U_ATTIVO = 1`. Se la finestra viene chiusa senza autenticarsi l'applicazione
+termina. Lo script di creazione inserisce l'utente `admin` con PIN `12345`, da cambiare con
+`TUtenteRepository.ImpostaPin`.
+
+Dopo l'accesso vengono caricati ruolo (`RUOLI`) e aree consentite (`PERMESSI_AREA` / `AREE`):
+nella home le aree non permesse restano disabilitate.
+
+## Aree
+
+| Codice | Area |
+| --- | --- |
+| `ANAG` | Anagrafiche e Magazzino |
+| `VEND` | Vendite e Contabilita |
+| `REPO` | Report |
+| `AMMI` | Amministrazione |
+
+I contenuti delle aree non sono ancora implementati: i pulsanti mostrano un avviso modale.
 
 ## Database
 
@@ -61,12 +74,19 @@ essere copiato accanto all'eseguibile. Sezione `[DATABASE]`:
 
 Se il file manca o non contiene ne' `Alias` ne' `Percorso` l'avvio si interrompe con un errore.
 
-Il database deve esistere: creare il file `.FDB` con `gbak`/`isql` prima del primo avvio.
-Le tabelle vengono create dall'applicazione se mancanti (Firebird 2.5 non supporta
-`IF NOT EXISTS`, quindi il DDL e' condizionato leggendo `RDB$RELATIONS`):
+Lo schema non viene creato dall'applicazione: prima del primo avvio creare il database ed
+eseguire `sql/zonico_schema.sql` (tabelle, generatori, trigger e dati iniziali). All'avvio
+l'applicazione verifica la presenza di `RUOLI`, `UTENTI`, `AREE` e `PERMESSI_AREA` e si ferma
+con un errore esplicito se lo script non e' stato eseguito.
 
-- `ZONE` (`ID`, `CODICE` univoco, `DESCRIZIONE`, `SUPERFICIE`, `ATTIVA`) con generator `GEN_ZONE_ID`
-- `UTENTI` (`ID`, `NOME`, `PIN`) con generator `GEN_UTENTI_ID`
+```
+isql -u SYSDBA -p masterkey
+SQL> CREATE DATABASE 'C:\Zonico\DB\ZONICO.FDB' USER 'SYSDBA' PASSWORD 'masterkey'
+     PAGE_SIZE 8192 DEFAULT CHARACTER SET UTF8;
+SQL> INPUT 'sql\zonico_schema.sql';
+```
+
+Con `DEFAULT CHARACTER SET UTF8` impostare `CharacterSet=UTF8` in `Zonico.ini`.
 
 ## Build
 

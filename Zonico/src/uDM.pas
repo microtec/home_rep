@@ -9,28 +9,24 @@ uses
   FireDAC.Phys, FireDAC.Phys.IB, FireDAC.Phys.IBBase, FireDAC.Phys.FB,
   FireDAC.Phys.FBDef, FireDAC.Stan.ExprFuncs, FireDAC.VCLUI.Wait,
   FireDAC.Comp.Client, FireDAC.Comp.UI, FireDAC.DApt,
-  uZonaRepository, uUtenteRepository;
+  uUtenteRepository;
 
 type
   TdmZonico = class(TDataModule)
     conZonico: TFDConnection;
     drvFirebird: TFDPhysFBDriverLink;
     guiWait: TFDGUIxWaitCursor;
-    qryZone: TFDQuery;
-    dsZone: TDataSource;
     procedure DataModuleCreate(Sender: TObject);
     procedure DataModuleDestroy(Sender: TObject);
   private
-    FRepository: TZonaRepository;
     FUtenti: TUtenteRepository;
     FUtenteCorrente: TUtente;
     function FileConfigurazione: string;
     procedure ConfiguraConnessione;
   public
-    property Repository: TZonaRepository read FRepository;
+    property Connessione: TFDConnection read conZonico;
     property Utenti: TUtenteRepository read FUtenti;
     property UtenteCorrente: TUtente read FUtenteCorrente write FUtenteCorrente;
-    procedure RicaricaZone(const AFiltro: string = '');
   end;
 
 var
@@ -39,7 +35,7 @@ var
 implementation
 
 uses
-  System.IOUtils, System.IniFiles;
+  System.IOUtils, System.IniFiles, uDbFirebird;
 
 {$R *.dfm}
 
@@ -71,7 +67,7 @@ begin
     LPassword := LIni.ReadString(SezioneDatabase, 'Password', 'masterkey');
     LProtocol := LIni.ReadString(SezioneDatabase, 'Protocol', 'TCPIP');
     LPort := LIni.ReadInteger(SezioneDatabase, 'Port', 3050);
-    LCharset := LIni.ReadString(SezioneDatabase, 'CharacterSet', 'ISO8859_1');
+    LCharset := LIni.ReadString(SezioneDatabase, 'CharacterSet', 'UTF8');
     LClientLib := LIni.ReadString(SezioneDatabase, 'VendorLib', '');
   finally
     LIni.Free;
@@ -111,22 +107,14 @@ begin
   ConfiguraConnessione;
   conZonico.Connected := True;
 
-  FRepository := TZonaRepository.Create(conZonico);
-  FRepository.CreaSchema;
+  // Lo schema e' creato da sql\zonico_schema.sql, l'applicazione non lo genera.
+  VerificaSchema(conZonico);
   FUtenti := TUtenteRepository.Create(conZonico);
-  FUtenti.CreaSchema;
-  RicaricaZone;
 end;
 
 procedure TdmZonico.DataModuleDestroy(Sender: TObject);
 begin
   FreeAndNil(FUtenti);
-  FreeAndNil(FRepository);
-end;
-
-procedure TdmZonico.RicaricaZone(const AFiltro: string);
-begin
-  FRepository.Carica(qryZone, AFiltro);
 end;
 
 end.

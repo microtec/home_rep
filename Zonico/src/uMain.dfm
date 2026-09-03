@@ -1,7 +1,7 @@
 object frmMain: TfrmMain
   Left = 0
   Top = 0
-  Caption = 'Zonico - Gestione zone'
+  Caption = 'Zonico'
   ClientHeight = 520
   ClientWidth = 880
   Color = clWhite
@@ -15,98 +15,15 @@ object frmMain: TfrmMain
   OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 16
-  object grdZone: TDBAdvGrid
-    Left = 0
-    Top = 65
-    Width = 880
-    Height = 436
-    Cursor = crDefault
-    Align = alClient
-    ColCount = 4
-    DrawingStyle = gdsClassic
-    FixedColor = 15265244
-    RowCount = 2
-    FixedRows = 1
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -13
-    Font.Name = 'Comfortaa'
-    Font.Style = []
-    Options = [goRowSizing, goColSizing, goRowSelect]
-    ParentFont = False
-    ScrollBars = ssBoth
-    TabOrder = 0
-    HoverRowCells = [hcNormal, hcSelected]
-    ActiveCellFont.Charset = DEFAULT_CHARSET
-    ActiveCellFont.Color = clWindowText
-    ActiveCellFont.Height = -13
-    ActiveCellFont.Name = 'Comfortaa'
-    ActiveCellFont.Style = [fsBold]
-    ControlLook.FixedGradientFrom = 16510687
-    ControlLook.FixedGradientTo = 15265244
-    ControlLook.FixedGradientHoverFrom = 15265244
-    ControlLook.FixedGradientHoverTo = 13204027
-    Filter = <>
-    FilterDropDown.Font.Charset = DEFAULT_CHARSET
-    FilterDropDown.Font.Color = clWindowText
-    FilterDropDown.Font.Height = -13
-    FilterDropDown.Font.Name = 'Comfortaa'
-    FilterDropDown.Font.Style = []
-    FixedRowHeight = 28
-    DefaultRowHeight = 26
-    SearchFooter.FindNextCaption = 'Trova successivo'
-    SearchFooter.FindPrevCaption = 'Trova precedente'
-    SearchFooter.HighLightCaption = 'Evidenzia'
-    SearchFooter.HintClose = 'Chiudi'
-    SearchFooter.MatchCaseCaption = 'Maiuscole/minuscole'
-    SearchFooter.Font.Charset = DEFAULT_CHARSET
-    SearchFooter.Font.Color = clWindowText
-    SearchFooter.Font.Height = -13
-    SearchFooter.Font.Name = 'Comfortaa'
-    SearchFooter.Font.Style = []
-    PrintSettings.Font.Charset = DEFAULT_CHARSET
-    PrintSettings.Font.Color = clWindowText
-    PrintSettings.Font.Height = -13
-    PrintSettings.Font.Name = 'Comfortaa'
-    PrintSettings.Font.Style = []
-    SortSettings.HeaderColor = 15265244
-    SortSettings.HeaderColorTo = 13204027
-    SortSettings.Show = True
-    SortSettings.IndexShow = True
-    Columns = <
-      item
-        Header = 'Codice'
-        FieldName = 'CODICE'
-        Width = 100
-      end
-      item
-        Header = 'Descrizione'
-        FieldName = 'DESCRIZIONE'
-        Width = 420
-      end
-      item
-        Header = 'Superficie (mq)'
-        FieldName = 'SUPERFICIE'
-        Width = 130
-      end
-      item
-        Header = 'Attiva'
-        FieldName = 'ATTIVA'
-        Width = 90
-      end>
-    AutoCreateColumns = False
-    AutoRemoveColumns = False
-    OnDblClickCell = grdZoneDblClickCell
-  end
   object pnlTop: TAdvPanel
     Left = 0
     Top = 0
     Width = 880
-    Height = 65
+    Height = 88
     Align = alTop
     UseDockManager = True
     ParentColor = False
-    TabOrder = 1
+    TabOrder = 0
     Version = '2.4.0.0'
     BorderColor = clNone
     Caption.Font.Charset = DEFAULT_CHARSET
@@ -125,38 +42,102 @@ object frmMain: TfrmMain
     Font.Name = 'Comfortaa'
     Font.Style = []
     ParentFont = False
-    object lblFiltro: TLabel
-      Left = 16
-      Top = 22
-      Width = 34
-      Height = 16
-      Caption = 'Cerca'
-    end
-    object edtFiltro: TAdvEdit
-      Left = 60
+    object lblTitolo: TLabel
+      Left = 24
       Top = 18
-      Width = 280
-      Height = 26
-      EmptyTextStyle = []
-      Color = clWhite
+      Width = 66
+      Height = 24
+      Caption = 'Zonico'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = 13205820
+      Font.Height = -19
+      Font.Name = 'Comfortaa'
+      Font.Style = [fsBold]
+      ParentFont = False
+    end
+    object lblSottotitolo: TLabel
+      Left = 24
+      Top = 50
+      Width = 4
+      Height = 16
+      Caption = ''
+    end
+    object btnEsci: TAdvGlowButton
+      Left = 750
+      Top = 28
+      Width = 110
+      Height = 32
+      Caption = 'Esci'
+      NotesFont.Charset = DEFAULT_CHARSET
+      NotesFont.Color = clWindowText
+      NotesFont.Height = -11
+      NotesFont.Name = 'Comfortaa'
+      NotesFont.Style = []
+      TabOrder = 0
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
       Font.Height = -13
       Font.Name = 'Comfortaa'
       Font.Style = []
       ParentFont = False
-      TabOrder = 0
-      Version = '3.5.0.0'
-      Visible = True
-      EmptyText = 'Codice o descrizione'
-      OnChange = edtFiltroChange
+      Version = '1.7.0.0'
+      OnClick = btnEsciClick
     end
-    object btnNuova: TAdvGlowButton
-      Left = 500
-      Top = 16
-      Width = 110
-      Height = 32
-      Caption = 'Nuova'
+  end
+  object pnlAree: TAdvPanel
+    Left = 0
+    Top = 88
+    Width = 880
+    Height = 413
+    Align = alClient
+    UseDockManager = True
+    ParentColor = False
+    TabOrder = 1
+    Version = '2.4.0.0'
+    BorderColor = clNone
+    Caption.Font.Charset = DEFAULT_CHARSET
+    Caption.Font.Color = clWindowText
+    Caption.Font.Height = -13
+    Caption.Font.Name = 'Comfortaa'
+    Caption.Font.Style = []
+    Caption.Text = ''
+    Caption.Visible = False
+    Fill.Color = clWhite
+    Fill.ColorTo = clWhite
+    Fill.BorderColor = clNone
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -13
+    Font.Name = 'Comfortaa'
+    Font.Style = []
+    ParentFont = False
+    object btnAreaAnag: TAdvGlowButton
+      Left = 90
+      Top = 60
+      Width = 320
+      Height = 120
+      Caption = 'Anagrafiche e Magazzino'
+      NotesFont.Charset = DEFAULT_CHARSET
+      NotesFont.Color = clWindowText
+      NotesFont.Height = -11
+      NotesFont.Name = 'Comfortaa'
+      NotesFont.Style = []
+      TabOrder = 0
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -15
+      Font.Name = 'Comfortaa'
+      Font.Style = []
+      ParentFont = False
+      Version = '1.7.0.0'
+      OnClick = AreaClick
+    end
+    object btnAreaVend: TAdvGlowButton
+      Left = 460
+      Top = 60
+      Width = 320
+      Height = 120
+      Caption = 'Vendite e Contabilita'
       NotesFont.Charset = DEFAULT_CHARSET
       NotesFont.Color = clWindowText
       NotesFont.Height = -11
@@ -165,19 +146,19 @@ object frmMain: TfrmMain
       TabOrder = 1
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
-      Font.Height = -13
+      Font.Height = -15
       Font.Name = 'Comfortaa'
       Font.Style = []
       ParentFont = False
       Version = '1.7.0.0'
-      OnClick = btnNuovaClick
+      OnClick = AreaClick
     end
-    object btnModifica: TAdvGlowButton
-      Left = 620
-      Top = 16
-      Width = 110
-      Height = 32
-      Caption = 'Modifica'
+    object btnAreaRepo: TAdvGlowButton
+      Left = 90
+      Top = 210
+      Width = 320
+      Height = 120
+      Caption = 'Report'
       NotesFont.Charset = DEFAULT_CHARSET
       NotesFont.Color = clWindowText
       NotesFont.Height = -11
@@ -186,19 +167,19 @@ object frmMain: TfrmMain
       TabOrder = 2
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
-      Font.Height = -13
+      Font.Height = -15
       Font.Name = 'Comfortaa'
       Font.Style = []
       ParentFont = False
       Version = '1.7.0.0'
-      OnClick = btnModificaClick
+      OnClick = AreaClick
     end
-    object btnElimina: TAdvGlowButton
-      Left = 740
-      Top = 16
-      Width = 110
-      Height = 32
-      Caption = 'Elimina'
+    object btnAreaAmmi: TAdvGlowButton
+      Left = 460
+      Top = 210
+      Width = 320
+      Height = 120
+      Caption = 'Amministrazione'
       NotesFont.Charset = DEFAULT_CHARSET
       NotesFont.Color = clWindowText
       NotesFont.Height = -11
@@ -207,12 +188,12 @@ object frmMain: TfrmMain
       TabOrder = 3
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
-      Font.Height = -13
+      Font.Height = -15
       Font.Name = 'Comfortaa'
       Font.Style = []
       ParentFont = False
       Version = '1.7.0.0'
-      OnClick = btnEliminaClick
+      OnClick = AreaClick
     end
   end
   object stbStato: TStatusBar
@@ -232,6 +213,6 @@ object frmMain: TfrmMain
   object styMain: TAdvFormStyler
     Style = tsWindows8
     Left = 424
-    Top = 200
+    Top = 400
   end
 end

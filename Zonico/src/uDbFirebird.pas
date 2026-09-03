@@ -5,27 +5,31 @@ interface
 uses
   FireDAC.Comp.Client;
 
-// Firebird 2.5 non supporta CREATE ... IF NOT EXISTS: il DDL va condizionato
-// interrogando le tabelle di sistema.
+// Firebird 2.5 non supporta CREATE ... IF NOT EXISTS: la presenza degli oggetti
+// va verificata sulle tabelle di sistema.
 function TabellaEsiste(AConnection: TFDConnection; const ANomeTabella: string): Boolean;
-function GeneratorEsiste(AConnection: TFDConnection; const ANomeGenerator: string): Boolean;
-procedure CreaGenerator(AConnection: TFDConnection; const ANomeGenerator: string);
-function ProssimoId(AConnection: TFDConnection; const ANomeGenerator: string): Integer;
+
+// Solleva un'eccezione se lo schema di zonico_schema.sql non e' stato caricato.
+procedure VerificaSchema(AConnection: TFDConnection);
 
 implementation
 
 uses
   System.SysUtils;
 
-function ContaOggetti(AConnection: TFDConnection; const ASql, ANome: string): Boolean;
+const
+  TabelleRichieste: array[0..3] of string = ('RUOLI', 'UTENTI', 'AREE', 'PERMESSI_AREA');
+
+function TabellaEsiste(AConnection: TFDConnection; const ANomeTabella: string): Boolean;
 var
   LQuery: TFDQuery;
 begin
   LQuery := TFDQuery.Create(nil);
   try
     LQuery.Connection := AConnection;
-    LQuery.SQL.Text := ASql;
-    LQuery.ParamByName('NOME').AsString := AnsiUpperCase(ANome);
+    LQuery.SQL.Text :=
+      'SELECT COUNT(*) FROM RDB$RELATIONS WHERE TRIM(RDB$RELATION_NAME) = :NOME';
+    LQuery.ParamByName('NOME').AsString := AnsiUpperCase(ANomeTabella);
     LQuery.Open;
     Result := LQuery.Fields[0].AsInteger > 0;
   finally
@@ -33,41 +37,15 @@ begin
   end;
 end;
 
-function TabellaEsiste(AConnection: TFDConnection; const ANomeTabella: string): Boolean;
-begin
-  Result := ContaOggetti(AConnection,
-    'SELECT COUNT(*) FROM RDB$RELATIONS WHERE TRIM(RDB$RELATION_NAME) = :NOME',
-    ANomeTabella);
-end;
-
-function GeneratorEsiste(AConnection: TFDConnection; const ANomeGenerator: string): Boolean;
-begin
-  Result := ContaOggetti(AConnection,
-    'SELECT COUNT(*) FROM RDB$GENERATORS WHERE TRIM(RDB$GENERATOR_NAME) = :NOME',
-    ANomeGenerator);
-end;
-
-procedure CreaGenerator(AConnection: TFDConnection; const ANomeGenerator: string);
-begin
-  if GeneratorEsiste(AConnection, ANomeGenerator) then
-    Exit;
-  AConnection.ExecSQL('CREATE GENERATOR ' + ANomeGenerator);
-  AConnection.Commit;
-end;
-
-function ProssimoId(AConnection: TFDConnection; const ANomeGenerator: string): Integer;
+procedure VerificaSchema(AConnection: TFDConnection);
 var
-  LQuery: TFDQuery;
+  LTabella: string;
 begin
-  LQuery := TFDQuery.Create(nil);
-  try
-    LQuery.Connection := AConnection;
-    LQuery.SQL.Text := Format('SELECT GEN_ID(%s, 1) FROM RDB$DATABASE', [ANomeGenerator]);
-    LQuery.Open;
-    Result := LQuery.Fields[0].AsInteger;
-  finally
-    LQuery.Free;
-  end;
+  for LTabella in TabelleRichieste do
+    if not TabellaEsiste(AConnection, LTabella) then
+      raise Exception.CreateFmt(
+        'Tabella %s mancante: eseguire sql\zonico_schema.sql sul database.',
+        [LTabella]);
 end;
 
 end.
